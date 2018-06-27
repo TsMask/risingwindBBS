@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.risingwind.mapper.TblPicMapper">
+  <resultMap id="BaseResultMap" type="com.risingwind.po.TblPic">
+    <result column="picId" jdbcType="INTEGER" property="picid" />
+    <result column="postId" jdbcType="INTEGER" property="postid" />
+    <result column="picName" jdbcType="VARCHAR" property="picname" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    picId, postId, picName
+  </sql>
+  
+  <select id="findAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from Tbl_Pic
+  </select>
+  <select id="findByPostId" parameterType="Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+	from Tbl_Pic where postId = #{value}
+  </select>
+  <select id="findByName" parameterType="String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+	from Tbl_Pic where picName = #{value}
+  </select>
+  <select id="countPic"  resultType="java.lang.Long">
+    select count(*) from Tbl_Pic
+  </select>
+  <delete id="delete" parameterType="com.risingwind.po.TblPic">
+    delete from Tbl_Pic where picId = #{picid} and picName = #{picname}
+  </delete>
+  <insert id="insert" parameterType="com.risingwind.po.TblPic">
+    insert into Tbl_Pic (postid, picName)
+    values (#{postid,jdbcType=INTEGER}, #{picname,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.risingwind.po.TblPic">
+    insert into Tbl_Pic
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="postid != null">
+        postid,
+      </if>
+      <if test="picname != null">
+        picName,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="postid != null">
+        #{postid,jdbcType=INTEGER},
+      </if>
+      <if test="picname != null">
+        #{picname,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="update" parameterType="Map">
+    update Tbl_Pic set 
+     picName = #{newpicname}
+    where picName = #{oldpicname}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.risingwind.po.TblPic">
+  	 update Tbl_Pic set 
+  	 <if test="postid != null">
+       postId = #{postid,jdbcType=INTEGER},
+     </if>
+     <if test="picname != null">
+       picName = #{picname,jdbcType=VARCHAR},
+     </if>
+  	 where picId = #{picid,jdbcType=INTEGER}
+  </update>
+</mapper>

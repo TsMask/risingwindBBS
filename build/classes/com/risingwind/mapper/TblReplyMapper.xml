@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.risingwind.mapper.TblReplyMapper">
+  <resultMap id="BaseResultMap" type="com.risingwind.po.TblReply">
+    <id column="replyId" jdbcType="INTEGER" property="replyid" />
+    <result column="postId" jdbcType="INTEGER" property="postid" />
+    <result column="floor" jdbcType="INTEGER" property="floor" />
+    <result column="userId" jdbcType="INTEGER" property="userid" />
+    <result column="replyUser" jdbcType="INTEGER" property="replyuser" />
+    <result column="replyTime" jdbcType="TIMESTAMP" property="replytime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.risingwind.po.TblReply">
+    <result column="replyContent" jdbcType="LONGNVARCHAR" property="replycontent" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    replyId, postId, floor, userId, replyUser, replyTime
+  </sql>
+  <sql id="Blob_Column_List">
+    replyContent
+  </sql>
+  
+  <select id="findAll" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from Tbl_Reply
+  </select>
+  <select id="findByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from Tbl_Reply
+    where replyId = #{replyid,jdbcType=INTEGER}
+  </select>
+  <select id="findByReplyUserwhthPostId" parameterType="com.risingwind.po.TblReply" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from Tbl_Reply
+    where postId = #{postid,jdbcType=INTEGER}
+    and replyUser = #{replyuser,jdbcType=INTEGER}
+  </select>
+  <select id="findByPostId" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from Tbl_Reply
+    where postId = #{postid,jdbcType=INTEGER}
+  </select>
+  <select id="countByReply" resultType="java.lang.Long">
+    select count(*) from Tbl_Reply
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from Tbl_Reply
+    where replyId = #{replyid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByReplyUserwhthPostId" parameterType="com.risingwind.po.TblReply">
+    delete from Tbl_Reply
+    where postId = #{postid,jdbcType=INTEGER}
+    and replyUser = #{replyuser,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.risingwind.po.TblReply">
+    insert into Tbl_Reply (postId, floor, 
+      userId, replyUser, replyTime, 
+      replyContent)
+    values (#{postid,jdbcType=INTEGER}, #{floor,jdbcType=INTEGER}, 
+      #{userid,jdbcType=INTEGER}, #{replyuser,jdbcType=INTEGER}, #{replytime,jdbcType=TIMESTAMP}, 
+      #{replycontent,jdbcType=LONGNVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.risingwind.po.TblReply">
+    insert into Tbl_Reply
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="postid != null">
+        postId,
+      </if>
+      <if test="floor != null">
+        floor,
+      </if>
+      <if test="userid != null">
+        userId,
+      </if>
+      <if test="replyuser != null">
+        replyUser,
+      </if>
+      <if test="replytime != null">
+        replyTime,
+      </if>
+      <if test="replycontent != null">
+        replyContent,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="postid != null">
+        #{postid,jdbcType=INTEGER},
+      </if>
+      <if test="floor != null">
+        #{floor,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="replyuser != null">
+        #{replyuser,jdbcType=INTEGER},
+      </if>
+      <if test="replytime != null">
+        #{replytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="replycontent != null">
+        #{replycontent,jdbcType=LONGNVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByMapSelective" parameterType="Map">
+    update Tbl_Reply
+    <set>
+      <if test="postid != null">
+        postId = #{postid,jdbcType=INTEGER},
+      </if>
+      <if test="floor != null">
+        floor = #{floor,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        userId = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="replyuser != null">
+        replyUser = #{replyuser,jdbcType=INTEGER},
+      </if>
+      <if test="replytime != null">
+        replyTime = #{replytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="replycontent != null">
+        replyContent = #{replycontent,jdbcType=LONGNVARCHAR},
+      </if>
+    </set>
+    where replyId = #{replyid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.risingwind.po.TblReply">
+    update Tbl_Reply
+    <set>
+      <if test="postid != null">
+        postId = #{postid,jdbcType=INTEGER},
+      </if>
+      <if test="floor != null">
+        floor = #{floor,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        userId = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="replyuser != null">
+        replyUser = #{replyuser,jdbcType=INTEGER},
+      </if>
+      <if test="replytime != null">
+        replyTime = #{replytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="replycontent != null">
+        replyContent = #{replycontent,jdbcType=LONGNVARCHAR},
+      </if>
+    </set>
+    where  replyId = #{record.replyid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.risingwind.po.TblReply">
+    update Tbl_Reply
+    set postId = #{postid,jdbcType=INTEGER},
+      floor = #{floor,jdbcType=INTEGER},
+      userId = #{userid,jdbcType=INTEGER},
+      replyUser = #{replyuser,jdbcType=INTEGER},
+      replyTime = #{replytime,jdbcType=TIMESTAMP},
+      replyContent = #{replycontent,jdbcType=LONGNVARCHAR}
+    where replyId = #{replyid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.risingwind.po.TblReply">
+    update Tbl_Reply
+    set postId = #{postid,jdbcType=INTEGER},
+      floor = #{floor,jdbcType=INTEGER},
+      userId = #{userid,jdbcType=INTEGER},
+      replyUser = #{replyuser,jdbcType=INTEGER},
+      replyTime = #{replytime,jdbcType=TIMESTAMP}
+    where replyId = #{replyid,jdbcType=INTEGER}
+  </update>
+</mapper>

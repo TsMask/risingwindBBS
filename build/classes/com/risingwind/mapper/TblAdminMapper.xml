@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.risingwind.mapper.TblAdminMapper">
+  <resultMap id="BaseResultMap" type="com.risingwind.po.TblAdmin">
+    <id column="adminNum" jdbcType="INTEGER" property="adminnum" />
+    <result column="adminstrator" jdbcType="VARCHAR" property="adminstrator" />
+    <result column="supervisorPassword" jdbcType="VARCHAR" property="supervisorpassword" />
+    <result column="loginCount" jdbcType="INTEGER" property="logincount" />
+    <result column="ipaddress" jdbcType="NVARCHAR" property="ipaddress" />
+    <result column="loginTime" jdbcType="TIMESTAMP" property="logintime" />
+    <result column="oldLoginTime" jdbcType="TIMESTAMP" property="oldlogintime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    adminNum, adminstrator, supervisorPassword, loginCount, ipaddress, loginTime, oldLoginTime
+  </sql>
+  <select id="findAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from Tbl_Admin
+  </select>
+  <select id="findByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from Tbl_Admin
+    where adminNum = #{adminnum,jdbcType=INTEGER}
+  </select>
+  <select id="findByAdminstrator" parameterType="String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from Tbl_Admin
+    where adminstrator = #{adminstrator,jdbcType=VARCHAR}
+  </select>
+  <select id="findByAdminstratorWithSupervisorPassword" parameterType="com.risingwind.po.TblAdmin" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from Tbl_Admin
+    where adminstrator = #{adminstrator,jdbcType=VARCHAR}
+    and supervisorPassword = #{supervisorpassword,jdbcType=VARCHAR}
+  </select>
+  <select id="countByAdmin" resultType="java.lang.Long">
+    select count(*) from Tbl_Admin
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from Tbl_Admin
+    where adminNum = #{adminnum,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByAdminstrator" parameterType="java.lang.String">
+    delete from Tbl_Admin
+    where adminstrator = #{adminstrator,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.risingwind.po.TblAdmin">
+    insert into Tbl_Admin (adminstrator, supervisorPassword, 
+      loginCount, ipaddress, loginTime, 
+      oldLoginTime)
+    values (#{adminstrator,jdbcType=VARCHAR}, #{supervisorpassword,jdbcType=VARCHAR}, 
+      #{logincount,jdbcType=INTEGER}, #{ipaddress,jdbcType=NVARCHAR}, #{logintime,jdbcType=TIMESTAMP}, 
+      #{oldlogintime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.risingwind.po.TblAdmin">
+    insert into Tbl_Admin
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="adminstrator != null">
+        adminstrator,
+      </if>
+      <if test="supervisorpassword != null">
+        supervisorPassword,
+      </if>
+      <if test="logincount != null">
+        loginCount,
+      </if>
+      <if test="ipaddress != null">
+        ipaddress,
+      </if>
+      <if test="logintime != null">
+        loginTime,
+      </if>
+      <if test="oldlogintime != null">
+        oldLoginTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="adminstrator != null">
+        #{adminstrator,jdbcType=VARCHAR},
+      </if>
+      <if test="supervisorpassword != null">
+        #{supervisorpassword,jdbcType=VARCHAR},
+      </if>
+      <if test="logincount != null">
+        #{logincount,jdbcType=INTEGER},
+      </if>
+      <if test="ipaddress != null">
+        #{ipaddress,jdbcType=NVARCHAR},
+      </if>
+      <if test="logintime != null">
+        #{logintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oldlogintime != null">
+        #{oldlogintime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByMapSelective" parameterType="Map">
+    update Tbl_Admin
+    <set>
+      <if test="adminstrator != null">
+        adminstrator = #{adminstrator,jdbcType=VARCHAR},
+      </if>
+      <if test="supervisorpassword != null">
+        supervisorPassword = #{supervisorpassword,jdbcType=VARCHAR},
+      </if>
+      <if test="logincount != null">
+        loginCount = #{logincount,jdbcType=INTEGER},
+      </if>
+      <if test="ipaddress != null">
+        ipaddress = #{ipaddress,jdbcType=NVARCHAR},
+      </if>
+      <if test="logintime != null">
+        loginTime = #{logintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oldlogintime != null">
+        oldLoginTime = #{oldlogintime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where adminNum = #{adminnum,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.risingwind.po.TblAdmin">
+    update Tbl_Admin
+    <set>
+      <if test="adminstrator != null">
+        adminstrator = #{adminstrator,jdbcType=VARCHAR},
+      </if>
+      <if test="supervisorpassword != null">
+        supervisorPassword = #{supervisorpassword,jdbcType=VARCHAR},
+      </if>
+      <if test="logincount != null">
+        loginCount = #{logincount,jdbcType=INTEGER},
+      </if>
+      <if test="ipaddress != null">
+        ipaddress = #{ipaddress,jdbcType=NVARCHAR},
+      </if>
+      <if test="logintime != null">
+        loginTime = #{logintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oldlogintime != null">
+        oldLoginTime = #{oldlogintime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where adminNum = #{adminnum,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.risingwind.po.TblAdmin">
+    update Tbl_Admin
+    set adminstrator = #{adminstrator,jdbcType=VARCHAR},
+      supervisorPassword = #{supervisorpassword,jdbcType=VARCHAR},
+      loginCount = #{logincount,jdbcType=INTEGER},
+      ipaddress = #{ipaddress,jdbcType=NVARCHAR},
+      loginTime = #{logintime,jdbcType=TIMESTAMP},
+      oldLoginTime = #{oldlogintime,jdbcType=TIMESTAMP}
+    where adminNum = #{adminnum,jdbcType=INTEGER}
+  </update>
+</mapper>

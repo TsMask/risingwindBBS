@@ -1,0 +1,104 @@
+@charset "utf-8";
+html, body {width:100%;height:100%;background: #F7F7F7;} /*非常重要的样式让背景图片100%适应整个屏幕*/  
+a {color: black; text-decoration: none; }
+a:hover {text-decoration: none; color: #ff6f3d; }
+/*导航栏*/
+#nav {position: fixed;z-index: 3;width: 100%;}
+.donwsould {background-color: #fd6440;}
+.my-navbar {transition: background 0.5s ease-in-out, padding 0.5s ease-in-out;background-color:rgba(255,255,255,.15);}  
+.my-navbar a{background:transparent !important;color:#fff !important}  
+.my-navbar a:hover {color:dimgray !important;background:transparent;outline:0}  
+.my-navbar a {transition: color 0.5s ease-in-out;}/*-webkit-transition ;-moz-transition*/  
+button.navbar-toggle {background-color:rgba(253, 123, 93, 0.55);}/*整个背景都是transparent透明的，会看不到，所以再次覆盖一下*/  
+button.navbar-toggle > span.icon-bar {background-color:#000} 
+
+/*轮播图*/
+#banner {margin-bottom: 12px;}
+.img-rounded {border-radius: 10px;}
+.item img {width:100%;}
+.ctl-right {right: 0px;top: 50%;left: auto;height: 100px;}
+.ctl-left {right: 0px;top: 50%;height: 100px;}
+
+/*主体左边*/
+.thumbnails {display: block; padding: 4px; margin-top: 20px; line-height: 1.42857143; background-color: #fff; border-radius: 4px; -webkit-transition: border .2s ease-in-out; -o-transition: border .2s ease-in-out; transition: border .2s ease-in-out;}
+.article_info {color: #c5c5c5; font-size: 12px; line-height: 22px; }
+.article_info_left {color: #c5c5c5; width: 400px; float: left; }
+.article_info_left img {float: left; border-radius: 11px; width: 22px; height: 22px; line-height: 22px; }
+.article_info_left a {color: #c5c5c5; }
+.author { padding: 0 8px 0 5px; }
+.article_info_right {color: #c5c5c5; float: right; width: 190px; height: 16px; line-height: 16px; text-align: right; }
+.article_info_right span {display: inline-block; padding-left: 20px; margin-right: 15px; }
+/*首页主体右边*/
+@media screen and (max-width:1000px){
+.visible{ display:none; }
+}
+/*回帖主体左边*/
+@media screen and (max-width:1000px){
+#userinfo { display:none;}
+}
+.panel-primarys {border-color: rgba(0,0,0,.075);margin-top: 20px;}
+.panel-bodys {padding: 0px 15px;}
+.panel-headings {padding: 10px 15px; border-bottom: 1px solid transparent; border-top-left-radius: 3px; border-top-right-radius: 3px; font-size: 16px;font-weight: 700;} /*返回首页*/
+/*返回顶部*/
+.scrolltopa {z-index: 3; display: block; width: 37px; height: 30px; position: fixed; right: 0; visibility: visible; bottom: 105px; margin: -30px 0 0 10px; border: 1px #cccccc solid; border-radius: 10px; cursor: pointer; line-height: 12px; text-align: center; color: #7d1c0a; text-decoration: none; background-color: #fd9c85;} 
+
+/*底部*/
+.footer {margin-top: 20px;background-color: #ffab97;padding: 0 40px;color: dimgray;}
+.login_type {
+	margin-top: 10px;
+	text-align: center;
+}
+.icon_type {
+	width: 30px;
+	height: 30px;
+	margin: 0 12px;
+	display: inline-block;
+	-webkit-border-radius: 50%;
+	-moz-border-radius: 50%;
+	-o-border-radius: 50%;
+	border-radius: 50%;
+	-webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -ms-filter: grayscale(100%);
+    -o-filter: grayscale(100%);
+    filter: grayscale(100%);
+    position: relative;
+
+}
+.icon_type:hover{
+	-webkit-filter:grayscale(0);
+	-moz-filter:grayscale(0);
+	-ms-filter:grayscale(0);
+	-o-filter:grayscale(0);
+	filter:grayscale(0);
+	filter:none;
+}
+.btn_li {background-color: #d32f2f;}
+.btn_li img {position: absolute; z-index: 3; left: -72px; bottom: 30px; display: none; }
+.btn_li:hover img {display: block; }
+.btn_huang {background-color: #1abd9f;}
+.btn_huang img {position: absolute; z-index: 3; left: -72px; bottom: 30px; display: none; }
+.btn_huang:hover img {display: block; }
+.btn_lu {background-color: #8b74e4;}
+.btn_lu img {position: absolute; z-index: 3; left: -72px; bottom: 30px; display: none; }
+.btn_lu:hover img {display: block; }
+.btn_yang {background-color: #0ae;}
+.btn_yang img {position: absolute; z-index: 3; left: -72px; bottom: 30px; display: none; }
+.btn_yang:hover img {display: block; }
+.btn_yu {background-color: #00d20d;}
+.btn_yu img {position: absolute; z-index: 3; left: -72px; bottom: 30px; display: none; }
+.btn_yu:hover img {display: block; }
+
+.icon_btn {
+	width: 18px;
+	height: 18px;
+	background: url(/pictures/pic_main/objectRom.gif);
+	vertical-align: middle;
+	display: inline-block;
+    margin: 5px auto 0;
+}
+.icon_li {background-position: 0;}
+.icon_huang {background-position: -19px 0;}
+.icon_lu {background-position: -56px 0;}
+.icon_yang {background-position: -38px 0;}
+.icon_yu {background-position: -76px 0;}

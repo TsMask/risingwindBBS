@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.risingwind.mapper.TblForumsMapper">
+  <resultMap id="BaseResultMap" type="com.risingwind.po.TblForums">
+    <id column="forumId" jdbcType="INTEGER" property="forumid" />
+    <result column="forumTitle" jdbcType="VARCHAR" property="forumtitle" />
+    <result column="forumInfo" jdbcType="NVARCHAR" property="foruminfo" />
+    <result column="forumPic" jdbcType="VARCHAR" property="forumpic" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    forumId, forumTitle, forumInfo, forumPic
+  </sql>
+  <select id="findAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from Tbl_Forums
+  </select>
+  <select id="findByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from Tbl_Forums
+    where forumId = #{forumid,jdbcType=INTEGER}
+  </select>
+  <select id="findByForumTitle" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from Tbl_Forums
+    where forumTitle = #{forumtitle,jdbcType=VARCHAR}
+  </select>
+  <select id="countByForums" resultType="java.lang.Long">
+    select count(*) from Tbl_Forums
+  </select>
+  <insert id="insert" parameterType="com.risingwind.po.TblForums">
+    insert into Tbl_Forums (forumTitle, forumInfo, forumPic)
+    values (#{forumtitle,jdbcType=VARCHAR}, #{foruminfo,jdbcType=NVARCHAR}, #{forumpic,jdbcType=VARCHAR})
+  </insert>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from Tbl_Forums
+    where forumId = #{forumid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByForumTitle" parameterType="java.lang.String">
+    delete from Tbl_Forums
+    where forumTitle = #{forumtitle,jdbcType=VARCHAR}
+  </delete>
+  <update id="updateByPrimaryKeySelective" parameterType="com.risingwind.po.TblForums">
+    update Tbl_Forums
+    <set>
+      <if test="forumtitle != null">
+        forumTitle = #{forumtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="foruminfo != null">
+        forumInfo = #{foruminfo,jdbcType=NVARCHAR},
+      </if>
+      <if test="forumpic != null">
+        forumPic = #{forumpic,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where forumId = #{forumid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.risingwind.po.TblForums">
+    update Tbl_Forums
+    set forumTitle = #{forumtitle,jdbcType=VARCHAR},
+      forumInfo = #{foruminfo,jdbcType=NVARCHAR},
+      forumPic = #{forumpic,jdbcType=VARCHAR}
+    where forumId = #{forumid,jdbcType=INTEGER}
+  </update>
+  
+</mapper>

@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.risingwind.mapper.TblUserMapper">
+  <resultMap id="BaseResultMap" type="com.risingwind.po.TblUser">
+    <id column="UID" jdbcType="INTEGER" property="uid" />
+    <result column="password" jdbcType="NVARCHAR" property="password" />
+    <result column="userName" jdbcType="NVARCHAR" property="username" />
+    <result column="phoneNum" jdbcType="NVARCHAR" property="phonenum" />
+    <result column="qqNum" jdbcType="INTEGER" property="qqnum" />
+    <result column="email" jdbcType="NVARCHAR" property="email" />
+    <result column="sex" jdbcType="NCHAR" property="sex" />
+    <result column="birthday" jdbcType="NVARCHAR" property="birthday" />
+    <result column="address" jdbcType="NVARCHAR" property="address" />
+    <result column="headPortrait" jdbcType="VARCHAR" property="headportrait" />
+    <result column="qianming" jdbcType="NVARCHAR" property="qianming" />
+    <result column="registrationTime" jdbcType="TIMESTAMP" property="registrationtime" />
+    <result column="registerIP" jdbcType="VARCHAR" property="registerip" />
+    <result column="signInNum" jdbcType="INTEGER" property="signinnum" />
+    <result column="signInPoints" jdbcType="INTEGER" property="signinpoints" />
+    <result column="empiricValue" jdbcType="INTEGER" property="empiricvalue" />
+    <result column="grade" jdbcType="INTEGER" property="grade" />
+    <result column="positi" jdbcType="VARCHAR" property="positi" />
+    <result column="ipAddress" jdbcType="VARCHAR" property="ipaddress" />
+    <result column="loginTime" jdbcType="TIMESTAMP" property="logintime" />
+    <result column="oldLoginTime" jdbcType="TIMESTAMP" property="oldlogintime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    UID, password, userName, phoneNum, qqNum, email, sex, birthday, address, headPortrait, 
+    qianming, registrationTime, registerIP, signInNum, signInPoints, empiricValue, grade, 
+    positi, ipAddress, loginTime, oldLoginTime
+  </sql>
+  
+  <select id="findAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from Tbl_User
+  </select>
+  <select id="findByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from Tbl_User
+    where UID = #{uid,jdbcType=INTEGER}
+  </select>
+  <select id="findByUserName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from Tbl_User
+    where username = #{username,jdbcType=NVARCHAR}
+  </select>
+  <select id="findByPhoneNumAndPassword" parameterType="com.risingwind.po.TblUser" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from Tbl_User
+    where phonenum = #{phonenum,jdbcType=NVARCHAR}
+    and password = #{password,jdbcType=NVARCHAR}
+  </select>
+  <select id="findByUserNameAndPassword" parameterType="com.risingwind.po.TblUser" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from Tbl_User
+    where username = #{username,jdbcType=NVARCHAR}
+    and password = #{password,jdbcType=NVARCHAR}
+  </select>
+  <select id="findByEmail" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from Tbl_User
+    where email = #{email,jdbcType=NVARCHAR}
+  </select>
+  <select id="countByUser" resultType="java.lang.Long">
+    select count(*) from Tbl_User
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from Tbl_User
+    where UID = #{uid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByUserName" parameterType="java.lang.String">
+    delete from Tbl_User
+    where username = #{username,jdbcType=NVARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.risingwind.po.TblUser">
+    insert into Tbl_User (password, userName, 
+      phoneNum, qqNum, email, 
+      sex, birthday, address, 
+      headPortrait, qianming, registrationTime, 
+      registerIP, signInNum, signInPoints, 
+      empiricValue, grade, positi, 
+      ipAddress, loginTime, oldLoginTime
+      )
+    values (#{password,jdbcType=NVARCHAR}, #{username,jdbcType=NVARCHAR}, 
+      #{phonenum,jdbcType=NVARCHAR}, #{qqnum,jdbcType=INTEGER}, #{email,jdbcType=NVARCHAR}, 
+      #{sex,jdbcType=NCHAR}, #{birthday,jdbcType=NVARCHAR}, #{address,jdbcType=NVARCHAR}, 
+      #{headportrait,jdbcType=VARCHAR}, #{qianming,jdbcType=NVARCHAR}, #{registrationtime,jdbcType=TIMESTAMP}, 
+      #{registerip,jdbcType=VARCHAR}, #{signinnum,jdbcType=INTEGER}, #{signinpoints,jdbcType=INTEGER}, 
+      #{empiricvalue,jdbcType=INTEGER}, #{grade,jdbcType=INTEGER}, #{positi,jdbcType=VARCHAR}, 
+      #{ipaddress,jdbcType=VARCHAR}, #{logintime,jdbcType=TIMESTAMP}, #{oldlogintime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.risingwind.po.TblUser">
+    insert into Tbl_User
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="password != null">
+        password,
+      </if>
+      <if test="username != null">
+        userName,
+      </if>
+      <if test="phonenum != null">
+        phoneNum,
+      </if>
+      <if test="qqnum != null">
+        qqNum,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="birthday != null">
+        birthday,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="headportrait != null">
+        headPortrait,
+      </if>
+      <if test="qianming != null">
+        qianming,
+      </if>
+      <if test="registrationtime != null">
+        registrationTime,
+      </if>
+      <if test="registerip != null">
+        registerIP,
+      </if>
+      <if test="signinnum != null">
+        signInNum,
+      </if>
+      <if test="signinpoints != null">
+        signInPoints,
+      </if>
+      <if test="empiricvalue != null">
+        empiricValue,
+      </if>
+      <if test="grade != null">
+        grade,
+      </if>
+      <if test="positi != null">
+        positi,
+      </if>
+      <if test="ipaddress != null">
+        ipAddress,
+      </if>
+      <if test="logintime != null">
+        loginTime,
+      </if>
+      <if test="oldlogintime != null">
+        oldLoginTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="password != null">
+        #{password,jdbcType=NVARCHAR},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=NVARCHAR},
+      </if>
+      <if test="phonenum != null">
+        #{phonenum,jdbcType=NVARCHAR},
+      </if>
+      <if test="qqnum != null">
+        #{qqnum,jdbcType=INTEGER},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=NVARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=NCHAR},
+      </if>
+      <if test="birthday != null">
+        #{birthday,jdbcType=NVARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=NVARCHAR},
+      </if>
+      <if test="headportrait != null">
+        #{headportrait,jdbcType=VARCHAR},
+      </if>
+      <if test="qianming != null">
+        #{qianming,jdbcType=NVARCHAR},
+      </if>
+      <if test="registrationtime != null">
+        #{registrationtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="registerip != null">
+        #{registerip,jdbcType=VARCHAR},
+      </if>
+      <if test="signinnum != null">
+        #{signinnum,jdbcType=INTEGER},
+      </if>
+      <if test="signinpoints != null">
+        #{signinpoints,jdbcType=INTEGER},
+      </if>
+      <if test="empiricvalue != null">
+        #{empiricvalue,jdbcType=INTEGER},
+      </if>
+      <if test="grade != null">
+        #{grade,jdbcType=INTEGER},
+      </if>
+      <if test="positi != null">
+        #{positi,jdbcType=VARCHAR},
+      </if>
+      <if test="ipaddress != null">
+        #{ipaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="logintime != null">
+        #{logintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oldlogintime != null">
+        #{oldlogintime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByMapSelective" parameterType="Map">
+    update Tbl_User
+    <set>
+      <if test="password != null">
+        password = #{password,jdbcType=NVARCHAR},
+      </if>
+      <if test="username != null">
+        userName = #{username,jdbcType=NVARCHAR},
+      </if>
+      <if test="phonenum != null">
+        phoneNum = #{phonenum,jdbcType=NVARCHAR},
+      </if>
+      <if test="qqnum != null">
+        qqNum = #{qqnum,jdbcType=INTEGER},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=NVARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=NCHAR},
+      </if>
+      <if test="birthday != null">
+        birthday = #{birthday,jdbcType=NVARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=NVARCHAR},
+      </if>
+      <if test="headportrait != null">
+        headPortrait = #{headportrait,jdbcType=VARCHAR},
+      </if>
+      <if test="qianming != null">
+        qianming = #{qianming,jdbcType=NVARCHAR},
+      </if>
+      <if test="registrationtime != null">
+        registrationTime = #{registrationtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="registerip != null">
+        registerIP = #{registerip,jdbcType=VARCHAR},
+      </if>
+      <if test="signinnum != null">
+        signInNum = #{signinnum,jdbcType=INTEGER},
+      </if>
+      <if test="signinpoints != null">
+        signInPoints = #{signinpoints,jdbcType=INTEGER},
+      </if>
+      <if test="empiricvalue != null">
+        empiricValue = #{empiricvalue,jdbcType=INTEGER},
+      </if>
+      <if test="grade != null">
+        grade = #{grade,jdbcType=INTEGER},
+      </if>
+      <if test="positi != null">
+        positi = #{positi,jdbcType=VARCHAR},
+      </if>
+      <if test="ipaddress != null">
+        ipAddress = #{ipaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="logintime != null">
+        loginTime = #{logintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oldlogintime != null">
+        oldLoginTime = #{oldlogintime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+	where UID = #{uid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.risingwind.po.TblUser">
+    update Tbl_User
+    <set>
+      <if test="password != null">
+        password = #{password,jdbcType=NVARCHAR},
+      </if>
+      <if test="username != null">
+        userName = #{username,jdbcType=NVARCHAR},
+      </if>
+      <if test="phonenum != null">
+        phoneNum = #{phonenum,jdbcType=NVARCHAR},
+      </if>
+      <if test="qqnum != null">
+        qqNum = #{qqnum,jdbcType=INTEGER},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=NVARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=NCHAR},
+      </if>
+      <if test="birthday != null">
+        birthday = #{birthday,jdbcType=NVARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=NVARCHAR},
+      </if>
+      <if test="headportrait != null">
+        headPortrait = #{headportrait,jdbcType=VARCHAR},
+      </if>
+      <if test="qianming != null">
+        qianming = #{qianming,jdbcType=NVARCHAR},
+      </if>
+      <if test="registrationtime != null">
+        registrationTime = #{registrationtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="registerip != null">
+        registerIP = #{registerip,jdbcType=VARCHAR},
+      </if>
+      <if test="signinnum != null">
+        signInNum = #{signinnum,jdbcType=INTEGER},
+      </if>
+      <if test="signinpoints != null">
+        signInPoints = #{signinpoints,jdbcType=INTEGER},
+      </if>
+      <if test="empiricvalue != null">
+        empiricValue = #{empiricvalue,jdbcType=INTEGER},
+      </if>
+      <if test="grade != null">
+        grade = #{grade,jdbcType=INTEGER},
+      </if>
+      <if test="positi != null">
+        positi = #{positi,jdbcType=VARCHAR},
+      </if>
+      <if test="ipaddress != null">
+        ipAddress = #{ipaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="logintime != null">
+        loginTime = #{logintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oldlogintime != null">
+        oldLoginTime = #{oldlogintime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where UID = #{uid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.risingwind.po.TblUser">
+    update Tbl_User
+    set password = #{password,jdbcType=NVARCHAR},
+      userName = #{username,jdbcType=NVARCHAR},
+      phoneNum = #{phonenum,jdbcType=NVARCHAR},
+      qqNum = #{qqnum,jdbcType=INTEGER},
+      email = #{email,jdbcType=NVARCHAR},
+      sex = #{sex,jdbcType=NCHAR},
+      birthday = #{birthday,jdbcType=NVARCHAR},
+      address = #{address,jdbcType=NVARCHAR},
+      headPortrait = #{headportrait,jdbcType=VARCHAR},
+      qianming = #{qianming,jdbcType=NVARCHAR},
+      registrationTime = #{registrationtime,jdbcType=TIMESTAMP},
+      registerIP = #{registerip,jdbcType=VARCHAR},
+      signInNum = #{signinnum,jdbcType=INTEGER},
+      signInPoints = #{signinpoints,jdbcType=INTEGER},
+      empiricValue = #{empiricvalue,jdbcType=INTEGER},
+      grade = #{grade,jdbcType=INTEGER},
+      positi = #{positi,jdbcType=VARCHAR},
+      ipAddress = #{ipaddress,jdbcType=VARCHAR},
+      loginTime = #{logintime,jdbcType=TIMESTAMP},
+      oldLoginTime = #{oldlogintime,jdbcType=TIMESTAMP}
+    where UID = #{uid,jdbcType=INTEGER}
+  </update>
+  
+</mapper>

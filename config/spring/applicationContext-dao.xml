@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xsi:schemaLocation="
+                http://www.springframework.org/schema/beans 
+                http://www.springframework.org/schema/beans/spring-beans.xsd
+                http://www.springframework.org/schema/context
+                http://www.springframework.org/schema/context/spring-context.xsd">
+				
+	<!-- 加载配置文件 -->			
+	<context:property-placeholder location="classpath:jdbc.properties"/>
+    <!-- c3p0连接池 -->        				
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="">
+	    <property name="driverClass" value="${jdbc.driverClassName}" />
+	     <property name="jdbcUrl" value="${jdbc.url}" />
+	    <property name="user" value="${jdbc.username}" />
+	    <property name="password" value="${jdbc.password}" />
+	    <!--连接池中保留的最大连接数。Default: 15 -->
+	    <property name="maxPoolSize" value="${jdbc.maxPoolSize}" />
+	    <!--连接池中保留的最小连接数。-->
+	    <property name="minPoolSize" value="${jdbc.minPoolSize}" />
+	    <!--初始化时获取的连接数，取值应在minPoolSize与maxPoolSize之间。Default: 3 -->
+	    <property name="initialPoolSize" value="${jdbc.initialPoolSize}" />
+	    <!--最大空闲时间,60秒内未使用则连接被丢弃。若为0则永不丢弃。Default: 0 -->
+	    <property name="maxIdleTime" value="${jdbc.maxIdleTime}" />
+	</bean>       
+
+    <!-- sqlSessionFacotry -->  
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">  
+    	<!-- 数据源 -->
+        <property name="dataSource" ref="dataSource" />  
+        <!-- 自动扫描mybatis的配置文件 -->  
+        <property name="configLocation" value="classpath:mybaitis/sqlMapConfig.xml"></property>  
+    </bean> 
+
+	<!-- mapper批量扫描将mapper.java和mapper.xml映射文件名称保持一致，且在一个目录中。-->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.risingwind.mapper"/>
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+	</bean>
+	
+</beans>

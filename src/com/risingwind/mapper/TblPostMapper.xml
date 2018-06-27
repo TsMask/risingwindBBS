@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.risingwind.mapper.TblPostMapper">
+  <resultMap id="BaseResultMap" type="com.risingwind.po.TblPost">
+    <id column="postId" jdbcType="INTEGER" property="postid" />
+    <result column="forumId" jdbcType="INTEGER" property="forumid" />
+    <result column="UID" jdbcType="INTEGER" property="uid" />
+    <result column="postTitle" jdbcType="NVARCHAR" property="posttitle" />
+    <result column="postTime" jdbcType="TIMESTAMP" property="posttime" />
+    <result column="pageViews" jdbcType="INTEGER" property="pageviews" />
+    <result column="regen" jdbcType="INTEGER" property="regen" />
+    <result column="pic" jdbcType="NVARCHAR" property="pic" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.risingwind.po.TblPost">
+    <result column="postContent" jdbcType="LONGNVARCHAR" property="postcontent" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    postId, forumId, UID, postTitle, postTime, pageViews, regen, pic
+  </sql>
+  <sql id="Blob_Column_List">
+    postContent
+  </sql>
+  
+  <select id="findAll" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from Tbl_Post
+  </select>
+  <select id="findByPageViewsDESC" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from Tbl_Post ORDER BY pageViews DESC
+  </select>
+  <select id="findByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from Tbl_Post
+    where postId = #{postid,jdbcType=INTEGER}
+  </select>
+  <select id="findByForumId" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from Tbl_Post
+    where forumId = #{forumid,jdbcType=INTEGER}
+  </select>
+  <select id="findByUID" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from Tbl_Post
+    where UID = #{uid,jdbcType=INTEGER}
+  </select>
+  <select id="countByPost" resultType="java.lang.Long">
+    select count(*) from Tbl_Post
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from Tbl_Post
+    where postId = #{postid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByUIDwithpostTitle" parameterType="Map">
+    delete from Tbl_Post
+    where UID = #{uid,jdbcType=INTEGER}
+    and postTitle = #{posttitle,jdbcType=NVARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.risingwind.po.TblPost">
+    insert into Tbl_Post (forumId, UID, 
+      postTitle, postTime, pageViews, 
+      regen, pic, postContent
+      )
+    values (#{forumid,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, 
+      #{posttitle,jdbcType=NVARCHAR}, #{posttime,jdbcType=TIMESTAMP}, #{pageviews,jdbcType=INTEGER}, 
+      #{regen,jdbcType=INTEGER}, #{pic,jdbcType=NVARCHAR}, #{postcontent,jdbcType=LONGNVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.risingwind.po.TblPost">
+    insert into Tbl_Post
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="forumid != null">
+        forumId,
+      </if>
+      <if test="uid != null">
+        UID,
+      </if>
+      <if test="posttitle != null">
+        postTitle,
+      </if>
+      <if test="posttime != null">
+        postTime,
+      </if>
+      <if test="pageviews != null">
+        pageViews,
+      </if>
+      <if test="regen != null">
+        regen,
+      </if>
+      <if test="pic != null">
+        pic,
+      </if>
+      <if test="postcontent != null">
+        postContent,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="forumid != null">
+        #{forumid,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="posttitle != null">
+        #{posttitle,jdbcType=NVARCHAR},
+      </if>
+      <if test="posttime != null">
+        #{posttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pageviews != null">
+        #{pageviews,jdbcType=INTEGER},
+      </if>
+      <if test="regen != null">
+        #{regen,jdbcType=INTEGER},
+      </if>
+      <if test="pic != null">
+        #{pic,jdbcType=NVARCHAR},
+      </if>
+      <if test="postcontent != null">
+        #{postcontent,jdbcType=LONGNVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByMapSelective" parameterType="Map">
+    update Tbl_Post
+    <set>
+      <if test="forumid != null">
+        forumId = #{forumid,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null">
+        UID = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="posttitle != null">
+        postTitle = #{posttitle,jdbcType=NVARCHAR},
+      </if>
+      <if test="posttime != null">
+        postTime = #{posttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pageviews != null">
+        pageViews = #{pageviews,jdbcType=INTEGER},
+      </if>
+      <if test="regen != null">
+        regen = #{regen,jdbcType=INTEGER},
+      </if>
+      <if test="pic != null">
+        pic = #{pic,jdbcType=NVARCHAR},
+      </if>
+      <if test="postcontent != null">
+        postContent = #{postcontent,jdbcType=LONGNVARCHAR},
+      </if>
+    </set>
+    where postId = #{postid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.risingwind.po.TblPost">
+    update Tbl_Post
+    <set>
+      <if test="forumid != null">
+        forumId = #{forumid,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null">
+        UID = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="posttitle != null">
+        postTitle = #{posttitle,jdbcType=NVARCHAR},
+      </if>
+      <if test="posttime != null">
+        postTime = #{posttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pageviews != null">
+        pageViews = #{pageviews,jdbcType=INTEGER},
+      </if>
+      <if test="regen != null">
+        regen = #{regen,jdbcType=INTEGER},
+      </if>
+      <if test="pic != null">
+        pic = #{pic,jdbcType=NVARCHAR},
+      </if>
+      <if test="postcontent != null">
+        postContent = #{postcontent,jdbcType=LONGNVARCHAR},
+      </if>
+    </set>
+    where postId = #{postid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.risingwind.po.TblPost">
+    update Tbl_Post
+    set forumId = #{forumid,jdbcType=INTEGER},
+      UID = #{uid,jdbcType=INTEGER},
+      postTitle = #{posttitle,jdbcType=NVARCHAR},
+      postTime = #{posttime,jdbcType=TIMESTAMP},
+      pageViews = #{pageviews,jdbcType=INTEGER},
+      regen = #{regen,jdbcType=INTEGER},
+      pic = #{pic,jdbcType=NVARCHAR},
+      postContent = #{postcontent,jdbcType=LONGNVARCHAR}
+    where postId = #{postid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.risingwind.po.TblPost">
+    update Tbl_Post
+    set forumId = #{forumid,jdbcType=INTEGER},
+      UID = #{uid,jdbcType=INTEGER},
+      postTitle = #{posttitle,jdbcType=NVARCHAR},
+      postTime = #{posttime,jdbcType=TIMESTAMP},
+      pageViews = #{pageviews,jdbcType=INTEGER},
+      regen = #{regen,jdbcType=INTEGER},
+      pic = #{pic,jdbcType=NVARCHAR}
+    where postId = #{postid,jdbcType=INTEGER}
+  </update>
+</mapper>
